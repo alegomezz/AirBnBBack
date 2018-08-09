@@ -6,7 +6,7 @@ import {
     GraphQLInt
 } from 'graphql'
 
-export const CaracteresticasType = new GraphQLObjectType({
+export const CaracteristicasType = new GraphQLObjectType({
     name: 'Caracteristicas',
     description: 'Caracteristicas de la propriedad',
     fields: () => ({

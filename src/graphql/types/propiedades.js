@@ -15,6 +15,9 @@ import {ServiciosType} from './servicios'
 
 
 export const CalificacionType = new GraphQLObjectType({
+    name:"Calificaciones",
+    description:"calificaciones de las propiedades",
+    fields: () => ({
     _id: {
         type:GraphQLNonNull(GraphQLID)
     },
@@ -23,7 +26,10 @@ export const CalificacionType = new GraphQLObjectType({
     },
     estrellas: {
         type: GraphQLInt
-    },
+    }
+       
+    })
+    
 });
 
 

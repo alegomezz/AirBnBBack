@@ -1,7 +1,16 @@
 import user from './user'
-import propiedades from './propiedades'
+import propiedad from './propiedades'
+import servicio from './servicio'
+import caracteristica from '../../models/caracteristicas'
+import reservacion from '../../models/reservaciones'
+import reservaciones from '../../models/reservaciones';
+
+
 
 export default {
     ...user,    
-    ...propiedades
+    ...propiedad,
+    ...servicio,
+    ...caracteristica,
+    ...reservacion
 }

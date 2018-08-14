@@ -4,13 +4,17 @@ import {
     GraphQLID,
     GraphQLNonNull,
     GraphQLInt,
-    GraphQLList
+    GraphQLList,
+    GraphQLInputObjectType
 } from 'graphql'
-import { UserType } from './users';
-import User from '../../models/users';
-import {CaracteristicasType} from './caracteristicas';
-import Caracteristica from '../../models/caracteristicas';
-import Servicio from '../../models/servicios';
+
+import { UserType } from './users'
+import User from '../../models/users'
+
+import {CaracteristicasType} from './caracteristicas'
+import Caracteristica from '../../models/caracteristicas'
+
+import Servicio from '../../models/servicios'
 import {ServiciosType} from './servicios'
 
 
@@ -35,8 +39,8 @@ export const CalificacionType = new GraphQLObjectType({
 
 
 export const PropiedadesType = new GraphQLObjectType({
-    name: 'Propiedades',
-    description: 'Datos de las propiedades subidas por usuarios',
+    name: "Propiedades",
+    description: "Datos de las propiedades subidas por usuarios",
     fields: () => ({
         _id: {
             type:GraphQLNonNull(GraphQLID)
@@ -58,8 +62,8 @@ export const PropiedadesType = new GraphQLObjectType({
         },
         user: {
             type: UserType, 
-            resolve(propiedades){
-                const {user} = propiedades
+            resolve(propiedad){
+                const {user} = propiedad
                 return User.findById(user).exec()
             }
         },
@@ -97,4 +101,53 @@ export const PropiedadesType = new GraphQLObjectType({
         }
 
     })
-});
+})
+
+export const PropiedadesInputType = new GraphQLInputObjectType({
+    name: "addPropiedades",
+    description: "agrga propiedades a la base de datos",
+    fields: () => ({
+        nombre:{
+            type:GraphQLString
+        },
+        descripcion_corta: {
+            type: GraphQLString
+        },
+        descripcion_larga: {
+            type: GraphQLString
+        },
+        ubicacion: {
+            type: GraphQLString
+        },
+        pais: {
+            type: GraphQLString
+        },
+        user: {
+            type: GraphQLNonNull(GraphQLID)
+        },
+        tipo: {
+            type: GraphQLInt
+        },
+        precio: {
+            type: GraphQLInt
+        },
+        servicios: {
+            type: new GraphQLList(GraphQLID)
+        },
+        fotos: {
+            type: GraphQLList(GraphQLString)
+        },
+        disponibilidad_inicial: {
+            type: GraphQLString
+        },
+        disponibilidad_final: {
+            type: GraphQLString
+        }
+           
+        })
+        
+    });
+    
+    
+    
+    

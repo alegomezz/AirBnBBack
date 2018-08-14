@@ -3,7 +3,8 @@ import {
     GraphQLString,
     GraphQLID,
     GraphQLNonNull,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLInputObjectType
 } from 'graphql'
 
 export const CaracteristicasType = new GraphQLObjectType({
@@ -25,3 +26,19 @@ export const CaracteristicasType = new GraphQLObjectType({
     
     })
 });
+
+export const CaracteristicasInputType = new GraphQLInputObjectType({
+    name:"addCaracteristicas",
+    description:"Mutation para agregar caracteristicas",
+    fields: () => ({
+        nombre:{
+            type:GraphQLString
+        },
+        descripcion:{
+            type:GraphQLString
+        },
+        numero:{
+            type:GraphQLInt
+        }
+    })
+})

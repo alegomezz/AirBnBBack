@@ -5,9 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --forceExit",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "dev": "nodemon index.js --exec babel-node --presets es2015,stage-2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules"
+    ],
+    "moduleNameMapper": {
+      "^mongoose$": "<rootDir>/node_modules/mongoose"
+    }
   },
   "author": "Devf Ale Gomez",
   "license": "ISC",
@@ -19,6 +28,10 @@
     "express-graphql": "^0.6.12",
     "graphql": "^0.13.2",
     "install": "^0.12.1",
+    "jest": "^23.5.0",
+    "jest-cli": "^23.5.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.8",
     "nodemon": "^1.18.3",
     "npm": "^6.3.0",
     "parser": "^0.1.4",

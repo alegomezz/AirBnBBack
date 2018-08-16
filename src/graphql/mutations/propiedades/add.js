@@ -3,12 +3,11 @@ import {
 } from 'graphql'
 
 import Propiedad from '../../../models/propiedades'
-import {PropiedadesTypes, PropiedadesInputType}  from '../../types/propiedades';
-
+import {PropiedadesType,PropiedadesInputType} from '../../types/propiedades'
 
 export default {
-    type: PropiedadesTypes,
-    args: {
+    type:PropiedadesType,
+    args:{
         data:{
             type: new GraphQLNonNull(PropiedadesInputType)
         }
@@ -16,7 +15,7 @@ export default {
     resolve(root,params){
         const propiedad = new Propiedad(params.data);
         const newPropiedad = propiedad.save()
-        if (!newPropiedad) throw Error("error al caer la propiedad de la base de datos")
+        if (!newPropiedad) throw Error("Error al crear la propiedad en la base de datos :(");
         return newPropiedad
     }
 }

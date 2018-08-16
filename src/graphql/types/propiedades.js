@@ -2,151 +2,144 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLNonNull,
     GraphQLInt,
+    GraphQLNonNull,
     GraphQLList,
     GraphQLInputObjectType
 } from 'graphql'
 
-import { UserType } from './users'
+import {UserType} from './users'
 import User from '../../models/users'
 
 import {CaracteristicasType} from './caracteristicas'
 import Caracteristica from '../../models/caracteristicas'
 
-import Servicio from '../../models/servicios'
 import {ServiciosType} from './servicios'
+import Servicio from '../../models/servicios'
 
 
 export const CalificacionType = new GraphQLObjectType({
     name:"Calificaciones",
-    description:"calificaciones de las propiedades",
+    description: "Calificaciones de las propiedades",
     fields: () => ({
-    _id: {
+    _id:{
         type:GraphQLNonNull(GraphQLID)
     },
     comentarios:{
         type:GraphQLString
     },
-    estrellas: {
-        type: GraphQLInt
+    estrellas:{
+        type:GraphQLInt
     }
-       
-    })
-    
-});
-
-
+})
+})
 
 export const PropiedadesType = new GraphQLObjectType({
-    name: "Propiedades",
-    description: "Datos de las propiedades subidas por usuarios",
+    name:"Propiedades",
+    description:"Descripcion de las Propiedades",
     fields: () => ({
-        _id: {
+        _id:{
             type:GraphQLNonNull(GraphQLID)
         },
         nombre:{
             type:GraphQLString
         },
-        descripcion_corta: {
-            type: GraphQLString
+        descripcion_corta:{
+            type:GraphQLString
         },
-        descripcion_larga: {
-            type: GraphQLString
+        descripcion_larga:{
+            type:GraphQLString
         },
-        ubicacion: {
-            type: GraphQLString
+        ubicacion:{
+            type:GraphQLString
         },
-        pais: {
-            type: GraphQLString
+        pais:{
+            type:GraphQLString
         },
-        user: {
-            type: UserType, 
+        user:{
+            type:UserType,
             resolve(propiedad){
                 const {user} = propiedad
                 return User.findById(user).exec()
             }
         },
-        tipo: {
-            type: GraphQLInt
+        tipo:{
+            type:GraphQLInt
         },
-        precio: {
-            type: GraphQLInt
+        precio:{
+            type:GraphQLInt
         },
-        calificacion: {
+        calificacion:{
             type: new GraphQLList(CalificacionType)
         },
-        caracteristicas: {
-            type: new GraphQLList(CaracteristicasType),
+        caracteristicas:{
+            type:new GraphQLList(CaracteristicasType),
             resolve(propiedad){
-                const{caracteristicas} = propiedad
-                return Caracteristica.findById({_id:{$in:caracteristicas}}).exec()
+                const {caracteristicas} = propiedad
+                return Caracteristica.find({_id:{$in:caracteristicas}}).exec()
             }
         },
-        servicios: {
+        servicios:{
             type: new GraphQLList(ServiciosType),
             resolve(propiedad){
-                const{servicios} = propiedad
-                return Servicio.findById({_id:{$in:servicios}}).exec()
+                const {servicios} = propiedad
+                return Servicio.find({_id:{$in:servicios}}).exec()
             }
         },
-        fotos: {
-            type: GraphQLList(GraphQLString)
+        fotos:{
+            type: GraphQLList(GraphQLString),
         },
-        disponibilidad_inicial: {
+        disponibilidad_inicial:{
             type: GraphQLString
         },
-        disponibilidad_final: {
+        disponibilidad_final:{
             type: GraphQLString
         }
-
     })
 })
 
 export const PropiedadesInputType = new GraphQLInputObjectType({
-    name: "addPropiedades",
-    description: "agrga propiedades a la base de datos",
+    name:"addPropiedades",
+    description:"Agrega propiedades a la base de datos",
     fields: () => ({
         nombre:{
             type:GraphQLString
         },
-        descripcion_corta: {
+        descripcion_corta:{
+            type:GraphQLString
+        },
+        descripcion_larga:{
+            type:GraphQLString
+        },
+        ubicacion:{
+            type:GraphQLString
+        },
+        pais:{
+            type:GraphQLString
+        },
+        user:{
+            type:GraphQLNonNull(GraphQLID),
+        },
+        tipo:{
+            type:GraphQLInt
+        },
+        precio:{
+            type:GraphQLInt
+        },
+        servicios:{
+            type: new GraphQLList(GraphQLID),
+        },
+        fotos:{
+            type: GraphQLList(GraphQLString),
+        },
+        disponibilidad_inicial:{
             type: GraphQLString
         },
-        descripcion_larga: {
-            type: GraphQLString
-        },
-        ubicacion: {
-            type: GraphQLString
-        },
-        pais: {
-            type: GraphQLString
-        },
-        user: {
-            type: GraphQLNonNull(GraphQLID)
-        },
-        tipo: {
-            type: GraphQLInt
-        },
-        precio: {
-            type: GraphQLInt
-        },
-        servicios: {
-            type: new GraphQLList(GraphQLID)
-        },
-        fotos: {
-            type: GraphQLList(GraphQLString)
-        },
-        disponibilidad_inicial: {
-            type: GraphQLString
-        },
-        disponibilidad_final: {
+        disponibilidad_final:{
             type: GraphQLString
         }
-           
-        })
-        
-    });
+    })
+})
     
     
     
